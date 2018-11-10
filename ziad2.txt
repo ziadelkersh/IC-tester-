@@ -1,0 +1,83 @@
+#include <REG52.H> 
+#include <string.h>
+#include <testic.h>
+#include <testic2.h> //doctor 's method
+void SendChar(unsigned char ch);
+void SetupSerial();
+void t_delay (int t);
+
+sbit Test_switch = P3^7;
+
+void main (void)
+  {
+	 unsigned int www;
+   SetupSerial();
+	 SendChar("I");
+	 SendChar("c");
+	 SendChar("/n");
+	
+	test:
+  Test_switch = 1;
+ 	P1=0XFF;
+    P2=0XFF;
+  
+  while(1)
+		if (Test_switch == 0)
+		{
+			t_delay(20000);
+			P1=0XFF;
+            P2=0XFF;
+			www = test7404();
+			if(www == 1)
+			{SendChar("N"); 
+		     goto test; }
+			t_delay(20000);
+			P1=0xFF;
+			P2=0xFF;
+			www=test7408();
+			if(www == 1)
+			{SendChar("A"); 
+		     goto test; }
+			t_delay(20000);
+			P1=0xFF;
+			P2=0xFF;
+			www=test7400();
+			if(www == 1)
+			{SendChar("D"); 
+		     goto test; 
+			 }
+			 t_delay(20000);
+			P1=0xFF;
+			P2=0xFF;
+			www=test7432();
+			if(www == 1)
+			{SendChar("O"); 
+		     goto test;
+			 }
+			 
+		    else
+			{SendChar("U"); 
+		     goto test; }
+		}
+
+void SendChar(unsigned char ch)
+{
+	  SBUF = ch;
+		while(TI==0)
+   	TI = 0;	
+}
+void t_delay (int t)
+{
+int n;
+for(n=0;n<t;n++)
+}
+
+void SetupSerial()
+{
+/*Setup the serial port for 9600 baud at 22.1184MHz.*/
+    SCON  = 0x50;		        		/* SCON: mode 1, 8bit UART, enable rcvr      */
+    TMOD  = 0x20;               /* TMOD: timer 1, mode 2, 8bit reload        */
+    TH1   = 250;                /* TH1:  reload value for 9600 baud @ 22.1184MHz   */
+    TR1   = 1;                  /* TR1:  timer 1 run                          */
+    //TI    = 1;                  /* TI:   set TI to send firstchar of UART    */
+}

@@ -1,0 +1,133 @@
+#include <stdio.h> // necessary to use printf 
+#include <REG52.H> 
+#include <string.h>
+#include <testic.h>  // rehab's method for test functions 
+#include <testic2.h> //doctor 's method 
+
+sbit Test_switch=P3^7;
+
+sbit P00=P0^0;
+sbit P00=P0^1;
+sbit P00=P0^2;
+sbit P00=P0^3;
+sbit P00=P0^4;
+sbit P00=P0^5;
+sbit P00=P0^6;
+sbit P00=P0^7;
+
+sbit P10=P1^0;
+sbit P10=P1^1;
+sbit P10=P1^2;
+sbit P10=P1^3;
+sbit P10=P1^4;
+sbit P10=P1^5;
+sbit P10=P1^6;
+sbit P10=P1^7; 
+
+
+sbit P20=P2^0;
+sbit P20=P2^1;
+sbit P20=P2^2;
+sbit P20=P2^3;
+sbit P20=P2^4;
+sbit P20=P2^5;
+sbit P20=P2^6;
+sbit P20=P2^7;
+
+void main (void) 
+{
+	unsigned int www ;
+	SetupSerial()
+	Printf("IC TESTER \n")
+	
+	test :
+	Test_switch = 1 ;
+	P1 = 0xFF ;
+	P2 = 0x00 ;
+	while (1)  
+	{
+		if (Test_switch==0) //if getbit p3,4 ==0 
+		{
+			t_delay(20000);
+			P1=0xFF ;
+			P2=0xFF ;
+			www=test 7404 ();
+			if (www==1) 
+			{
+				Printf("7404\n")
+				goto test ;
+				
+			}
+			t_delay(20000);
+			P1=0xFF ;
+			P2=0xFF ;
+			www=test 7408 ();
+			if (www==1) 
+			{
+				PrintString("7408\n")
+				goto test ;
+			
+			t_delay(20000);
+			P1=0xFF ;
+			P2=0xFF ;
+			www=test 740 ();
+			if (www==1) 
+			{
+				Printf("7400\n")
+				goto test ;
+				
+			t_delay(20000);
+			P1=0xFF ;
+			P2=0xFF ; 
+			www=test 7404 ();
+			if (www==1) 
+			{
+				Printf("7432\n")
+				goto test ;
+				
+			if (www==0)
+			{
+				Printf("undefined\n");
+				goto test ;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
